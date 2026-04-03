@@ -27,7 +27,7 @@ runs:
       run: |
         echo Deployment to ${{ inputs.environment-name }} environment has started..
         echo Creating environment..
-        python -m venv venv
+        venv\Scripts\python.exe -m venv venv
         echo Installing dependencies..
         venv\Scripts\python.exe -m pip install -r requirements.txt
 
@@ -43,7 +43,7 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
-        node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment-name }} & set errorlevel=0
+        node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment-name }} || exit 0
 
     - name: Start new connection
       shell: cmd
@@ -51,9 +51,3 @@ runs:
       run: |
         echo Starting new connection..
         node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment-name }} app.py --interpreter "%CD%\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
-
-    - name: Show pm2 list
-      shell: cmd
-      working-directory: ${{ inputs.repo-path }}
-      run: |
-        node_modules\.bin\pm2 list
