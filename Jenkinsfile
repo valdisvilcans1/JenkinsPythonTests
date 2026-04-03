@@ -78,7 +78,7 @@ def build() {
     echo "Creating enviroment.."
     bat "py -m venv venv"
     echo "Installing dependecies.."
-    bat "./venv/bin/python -m pip install -r requirements.txt "
+    bat "'./venv/bin/python' -m pip install -r requirements.txt "
 }
 
 def deploy(String environment, int port) {
