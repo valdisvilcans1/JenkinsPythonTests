@@ -86,7 +86,7 @@ def deploy(String environment, int port) {
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
     bat "npm install pm2"
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
-    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} index.js -- ${port}"
+    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py -- ${port}"
 }
 
 def test(String environment) {
