@@ -72,7 +72,7 @@ pipeline {
 }
 
 def build() {
-    cho "Branching python greetings.."
+    echo "Branching python greetings.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
     bat "dir"
     echo "Creating enviroment.."
