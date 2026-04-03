@@ -68,10 +68,6 @@ pipeline {
     }
 }
 
-def branch_python_greetings() {
-    echo "Branching python greetings.."
-    git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
-}
 
 def build() {
     echo "Branching python greetings.."
@@ -80,22 +76,11 @@ def build() {
     echo "Creating enviroment.."
     bat "venv\\Scripts\\python.exe -m venv venv"
     echo "Installing dependecies.."
-    bat "venv\\Scripts\\python.exe -m pip install -r requirements.txt "
+    bat "venv\\Scripts\\python.exe -m pip install -r requirements.txt"
 }
 
 def deploy(String environment, int port) {
-    echo "Branching python greetings.."
-    git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
-    bat "npm install pm2"
-    bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} & set errorlevel=0"
-    bat "node_modules\\.bin\\pm2 start app.py --name greetings-app-${environmentName} --interpreter python -- --port ${port}"
 }
 
 def test(String environment) {
-    echo "Branching js framework course.."
-    git branch: 'main', poll: true, url: 'https://github.com/mtararujs/course-js-api-framework.git'
-    echo "Installing npm dependencies.."
-    bat "npm install"
-    echo "Running greetings.."
-    bat "npm run greetings greetings_${environment}"
 }
