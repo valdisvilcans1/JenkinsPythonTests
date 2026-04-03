@@ -88,7 +88,7 @@ def deploy(String environment, int port) {
     branch_python_greetings()
     bat "npm install pm2"
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
-    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} venv\\Scripts\\python.exe app.py -- ${port}"
+    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} venv\\Scripts\\python.exe app.py -- -- ${port}"
 }
 
 def test(String environment) {
