@@ -93,7 +93,7 @@ def deploy(String environment, int port) {
 
 def test(String environment) {
     echo "Branching js framework course.."
-    git branch: 'main', poll: false, url: 'https://github.com/mtararujs/course-js-api-framework.git'
+    git branch: 'main', poll: true, url: 'https://github.com/mtararujs/course-js-api-framework.git'
     echo "Installing npm dependencies.."
     bat "npm install"
     echo "Running greetings.."
