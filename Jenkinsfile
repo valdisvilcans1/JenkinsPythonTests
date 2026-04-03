@@ -69,9 +69,14 @@ pipeline {
 }
 
 
-def build() {
+def branch_python_greetings() {
     echo "Branching python greetings.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
+}
+
+
+def build() {
+    branch_python_greetings()
     bat "dir"
     echo "Creating enviroment.."
     bat "venv\\Scripts\\python.exe -m venv venv"
@@ -80,6 +85,11 @@ def build() {
 }
 
 def deploy(String environment, int port) {
+    branch_python_greetings()
+    bat "npm install pm2"
+    bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
+    bat "dir venv\\Scripts"
+    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py --interpreter venv\\Scripts\\python.exe -- ${port}"
 }
 
 def test(String environment) {
