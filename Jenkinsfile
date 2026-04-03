@@ -87,7 +87,7 @@ def deploy(String environment, int port) {
     echo "Branching python greetings.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
     bat "npm install pm2"
-    bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
+    bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} & set errorlevel=0"
     bat "node_modules\\.bin\\pm2 start app.py --name greetings-app-${environmentName} --interpreter python -- --port ${port}"
 }
 
