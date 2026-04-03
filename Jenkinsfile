@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('install-pip-deps') {
             steps {
@@ -70,12 +69,12 @@ pipeline {
 
 
 def branch_python_greetings() {
-    echo "Branching python greetings.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
 }
 
 
 def build() {
+    echo "Installing all necessary node dependencies.."
     branch_python_greetings()
     bat "dir"
     echo "Creating enviroment.."
@@ -85,15 +84,21 @@ def build() {
 }
 
 def deploy(String environment, int port) {
+    echo "Deployment to ${environment} environment has started.."
     branch_python_greetings()
+    echo "Installing pm2 dependecy.."
     bat "npm install pm2"
+    echo "Deleting old connection.."
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
+    echo "Starting new connection.."
     bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py --interpreter %CD%\\venv\\Scripts\\pythonw.exe -- --port ${port}"
 }
 
 def test(String environment) {
-    echo "Branching js framework course.."
+    echo "Testing Sample Book Application service has started on ${environment} environment.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/course-js-api-framework.git'
+    echo "Installing all npm dependencies.."
     bat "npm install"
+    echo "Running npm greetings skript.."
     bat "npm run greetings greetings_${environment}"
 }
