@@ -88,9 +88,12 @@ def deploy(String environment, int port) {
     branch_python_greetings()
     bat "npm install pm2"
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
-    bat "dir venv\\Scripts"
     bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py --interpreter %CD%\\venv\\Scripts\\pythonw.exe -- --port ${port}"
 }
 
 def test(String environment) {
+    echo "Branching js framework course.."
+    git branch: 'main', poll: false, url: 'https://github.com/mtararujs/course-js-api-framework.git'
+    bat "npm install"
+    bat "npm run greetings greetings_${environment}"
 }
