@@ -1,3 +1,5 @@
+// GitHub: https://github.com/valdisvilcans1/JenkinsPythonTests/tree/main
+
 pipeline {
     agent any
     stages {
@@ -95,7 +97,7 @@ def deploy(String environment, int port) {
 }
 
 def test(String environment) {
-    echo "Testing Sample Book Application service has started on ${environment} environment.."
+    echo "Testing application service has started on ${environment} environment.."
     git branch: 'main', poll: false, url: 'https://github.com/mtararujs/course-js-api-framework.git'
     echo "Installing all npm dependencies.."
     bat "npm install"

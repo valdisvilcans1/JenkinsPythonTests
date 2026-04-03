@@ -1,0 +1,59 @@
+name: deploy
+description: Deploy python greetings
+
+inputs:
+  repo-path:
+    required: true
+    description: Directory for python greetings
+  environment-name:
+    required: true
+    description: Environment name
+  port:
+    required: true
+    description: Port number
+
+runs:
+  using: composite
+  steps:
+    - name: Python greetings repository
+      uses: actions/checkout@v6
+      with:
+        repository: mtararujs/python-greetings
+        path: ${{ inputs.repo-path }}
+
+    - name: Create environment
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Deployment to ${{ inputs.environment-name }} environment has started..
+        echo Creating environment..
+        python -m venv venv
+        echo Installing dependencies..
+        venv\Scripts\python.exe -m pip install -r requirements.txt
+
+    - name: Install pm2 dependency
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Installing pm2 dependency..
+        npm install pm2
+
+    - name: Delete old connection
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Deleting old connection..
+        node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment-name }} & set errorlevel=0
+
+    - name: Start new connection
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Starting new connection..
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment-name }} app.py --interpreter "%CD%\venv\Scripts\python.exe" -- --port ${{ inputs.port }}
+
+    - name: Show pm2 list
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        node_modules\.bin\pm2 list

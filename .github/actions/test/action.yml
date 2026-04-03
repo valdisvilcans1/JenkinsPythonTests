@@ -1,0 +1,33 @@
+name: test
+description: Run tests
+
+inputs:
+  repo-path:
+    required: true
+    description: Directory for python greetings
+  environment-name:
+    required: true
+    description: Environment name
+
+runs:
+  using: composite
+  steps:
+    - name: course js api framework repository
+      uses: actions/checkout@v6
+      with:
+        repository: mtararujs/course-js-api-framework
+        path: ${{ inputs.repo-path }}
+
+    - name: Install all npm dependencies
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Installing all npm dependencies..
+        npm install
+
+    - name: Run npm greetings script
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Running npm greetings script..
+        npm run greetings greetings_${{ inputs.environment-name }}

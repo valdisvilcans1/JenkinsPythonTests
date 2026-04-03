@@ -1,0 +1,36 @@
+name: build
+description: Install python dependencies
+
+inputs:
+  repo-path:
+    required: true
+    description: Directory for python greetings
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout python-greetings repository
+      uses: actions/checkout@v6
+      with:
+        repository: mtararujs/python-greetings
+        path: ${{ inputs.repo-path }}
+
+    - name: Show repository files
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: dir
+
+    - name: Create environment
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Creating environment..
+        python -m venv venv
+
+    - name: Install dependencies
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo Installing dependencies..
+        venv\Scripts\python.exe -m pip install --upgrade pip
+        venv\Scripts\python.exe -m pip install -r requirements.txt
