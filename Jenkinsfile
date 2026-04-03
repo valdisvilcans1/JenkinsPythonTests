@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    triggers { 
-        pollSCM('*/1 * * * *') 
-    }
+
     stages {
         stage('install-pip-deps') {
             steps {
@@ -91,7 +89,7 @@ def deploy(String environment, int port) {
     bat "npm install pm2"
     bat "dir"
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
-    bat "node_modules\\.bin\\pm2 start app.py --name greetings-app-${environment} --interpreter venv\\Scripts\\python -- --port ${port}"
+    bat "node_modules\\.bin\\pm2 start app.py --name greetings-app-${environment} --interpreter venv\\Scripts\\python --port ${port}"
 }
 
 def test(String environment) {
