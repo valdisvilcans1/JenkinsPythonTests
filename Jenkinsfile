@@ -15,7 +15,7 @@ pipeline {
         stage('deploy-to-dev') {
             steps {
                 script {
-                    deploy("DEV", 1010)
+                    deploy("DEV", 7001)
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('deploy-to-stg') {
             steps {
                 script {
-                    deploy("STG", 2020)
+                    deploy("STG", 7002)
                 }
             }
         }
@@ -43,21 +43,21 @@ pipeline {
         stage('deploy-to-preprod') {
             steps {
                 script {
-                    deploy("PRD", 3030)
+                    deploy("PRE", 7003)
                 }
             }
         }
         stage('tests-on-preprod') {
             steps {
                 script {
-                    test("PRD")
+                    test("PRE")
                 }
             }
         }
         stage('deploy-to-prod') {
             steps {
                 script {
-                    test("PRD")
+                    deploy("PRD", 7004)
                 }
             }
         }
@@ -82,7 +82,10 @@ def build() {
 }
 
 def deploy(String environment, int port) {
-
+    echo "Branching python greetings.."
+    git branch: 'main', poll: false, url: 'https://github.com/mtararujs/python-greetings.git'
+    bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} & EXIT /B 0"
+    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} index.js -- ${port}"
 }
 
 def test(String environment) {
