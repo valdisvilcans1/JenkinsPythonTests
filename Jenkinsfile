@@ -1,5 +1,3 @@
-// GitHub: https://github.com/valdisvilcans1/JenkinsPythonTests/tree/main
-
 pipeline {
     agent any
     stages {
