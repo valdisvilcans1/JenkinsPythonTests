@@ -24,8 +24,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/deploy
         with:
-          environment: "dev"
-          port: 7001
+          repo-path: python-greetings
+          environment-name: dev
+          port: "7001"
 
   tests-on-dev:
     runs-on: self-hosted
@@ -34,7 +35,8 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/test
         with:
-          environment: "dev"
+          repo-path: course-js-api-framework
+          environment-name: dev
 
   deploy-to-stg:
     runs-on: self-hosted
@@ -43,8 +45,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/deploy
         with:
-          environment: "stg"
-          port: 7002
+          repo-path: python-greetings
+          environment-name: stg
+          port: "7002"
   
   tests-on-stg:
     runs-on: self-hosted
@@ -53,7 +56,8 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/test
         with:
-          environment: "stg"
+          repo-path: course-js-api-framework
+          environment-name: stg
   
   deploy-to-preprod:
     runs-on: self-hosted
@@ -62,8 +66,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/deploy
         with:
-          environment: "preprod"
-          port: 7003
+          repo-path: python-greetings
+          environment-name: preprod
+          port: "7003"
   
   tests-on-preprod:
     runs-on: self-hosted
@@ -72,7 +77,8 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/test
         with:
-          environment: "preprod"
+          repo-path: course-js-api-framework
+          environment-name: preprod
     
   deploy-to-prod:
     runs-on: self-hosted
@@ -81,8 +87,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/deploy
         with:
-          environment: "prod"
-          port: 7004
+          repo-path: python-greetings
+          environment-name: prod
+          port: "7004"
   
   tests-on-prod:
     runs-on: self-hosted
@@ -91,4 +98,5 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/test
         with:
-          environment: "prod"
+          repo-path: course-js-api-framework
+          environment-name: prod
