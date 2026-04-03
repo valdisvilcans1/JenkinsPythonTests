@@ -89,7 +89,7 @@ def deploy(String environment, int port) {
     bat "npm install pm2"
     bat "node_modules\\.bin\\pm2 delete greetings-app-${environment} || exit 0"
     bat "dir venv\\Scripts"
-    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py --interpreter %CD%\\venv\\Scripts\\python.exe -- ${port}"
+    bat "node_modules\\.bin\\pm2 start -n greetings-app-${environment} app.py --interpreter %CD%\\venv\\Scripts\\pythonw.exe -- ${port}"
 }
 
 def test(String environment) {
