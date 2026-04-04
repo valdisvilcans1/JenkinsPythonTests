@@ -20,14 +20,14 @@ runs:
 
     - name: Install all npm dependencies
       shell: cmd
-      working-directory: ./${{ inputs.repo-path }}
+      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Installing all npm dependencies..
         npm install
 
     - name: Run npm greetings script
       shell: cmd
-      working-directory: ./${{ inputs.repo-path }}
+      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Running npm greetings script..
         npm run greetings greetings_${{ inputs.environment }}
