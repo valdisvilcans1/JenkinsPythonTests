@@ -37,7 +37,8 @@ runs:
 
     - name: Start new connection
       shell: cmd
+      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Starting new connection..
         dir
-        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} ${{ inputs.repo-path }}/app.py --interpreter venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter ..\venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
