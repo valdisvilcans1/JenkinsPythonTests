@@ -15,6 +15,14 @@ runs:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
 
+    - name: Cache Python environment
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.repo-path }}/venv
+        key: ${{ runner.os }}-venv-${{ hashFiles(format('{0}/requirements.txt', inputs.repo-path)) }}
+        restore-keys: |
+          ${{ runner.os }}-venv-
+
     - name: Create environment
       shell: cmd
       working-directory: ${{ inputs.repo-path }}
