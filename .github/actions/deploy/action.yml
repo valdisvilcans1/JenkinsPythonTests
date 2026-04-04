@@ -15,12 +15,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Python greetings repository
-      uses: actions/checkout@v6
-      with:
-        repository: mtararujs/python-greetings
-        path: ${{ inputs.repo-path }}
-
     - name: Install pm2 dependency
       shell: cmd
       working-directory: ${{ inputs.repo-path }}
