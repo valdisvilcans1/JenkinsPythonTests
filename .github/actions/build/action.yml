@@ -13,19 +13,12 @@ runs:
       uses: actions/checkout@v6
       with:
         repository: mtararujs/python-greetings
+        clean: "false"
         path: ${{ inputs.repo-path }}
-
-    - name: Cache Python environment
-      uses: actions/cache@v3
-      with:
-        path: ${{ inputs.repo-path }}/venv
-        key: ${{ runner.os }}-venv-${{ hashFiles(format('{0}/requirements.txt', inputs.repo-path)) }}
-        restore-keys: |
-          ${{ runner.os }}-venv-
 
     - name: Create environment
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
+      working-directory: ./${{ inputs.repo-path }}
       run: |
         echo Creating environment..
         py -m venv venv
@@ -36,7 +29,7 @@ runs:
 
     - name: Install dependencies
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
+      working-directory: ./${{ inputs.repo-path }}
       run: |
         echo Installing dependencies..
         venv\\Scripts\\python.exe -m pip install -r requirements.txt
