@@ -13,20 +13,29 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
       - uses: ./.github/actions/build
         with:
           repo-path: python-greetings
       - name: Cache venv
         uses: actions/cache@v3
         with:
-          path: python-greetings/venv
-          key: venv-${{ hashFiles('python-greetings/requirements.txt') }}
+          path: python-greetings
+          key: python-greetings-${{ hashFiles('python-greetings/requirements.txt') }}
 
   deploy-to-dev:
     runs-on: self-hosted
     needs: install-pip-deps
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
+      - name: Restore python-greetings cache
+        uses: actions/cache@v3
+        with:
+          path: python-greetings
+          key: python-greetings-${{ hashFiles('python-greetings/requirements.txt') }}
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
@@ -48,6 +57,13 @@ jobs:
     needs: tests-on-dev
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
+      - name: Restore python-greetings cache
+        uses: actions/cache@v3
+        with:
+          path: python-greetings
+          key: python-greetings-${{ hashFiles('python-greetings/requirements.txt') }}
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
@@ -69,6 +85,13 @@ jobs:
     needs: tests-on-stg
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
+      - name: Restore python-greetings cache
+        uses: actions/cache@v3
+        with:
+          path: python-greetings
+          key: python-greetings-${{ hashFiles('python-greetings/requirements.txt') }}
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
@@ -90,6 +113,13 @@ jobs:
     needs: tests-on-preprod
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
+      - name: Restore python-greetings cache
+        uses: actions/cache@v3
+        with:
+          path: python-greetings
+          key: python-greetings-${{ hashFiles('python-greetings/requirements.txt') }}
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
