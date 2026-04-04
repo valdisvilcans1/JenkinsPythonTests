@@ -31,5 +31,5 @@ runs:
       shell: cmd
       run: |
         echo Starting new connection..
-        dir
+        dir ${{ inputs.environment }}
         pm2 start -n greetings-app-${{ inputs.environment }} ${{ inputs.repo-path }}/app.py --interpreter ".\${{ inputs.repo-path }}\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
