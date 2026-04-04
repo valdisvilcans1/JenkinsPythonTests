@@ -15,17 +15,17 @@ runs:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
 
-    - name: Show repository files
-      shell: cmd
-      working-directory: ${{ inputs.repo-path }}
-      run: dir
-
     - name: Create environment
       shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Creating environment..
         py -m venv venv
+
+    - name: Show repository files
+      shell: cmd
+      working-directory: ${{ inputs.repo-path }}
+      run: dir
 
     - name: Install dependencies
       shell: cmd
