@@ -25,7 +25,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
-          environment-name: dev
+          environment: dev
           port: "7001"
 
   tests-on-dev:
@@ -36,7 +36,7 @@ jobs:
       - uses: ./.github/actions/test
         with:
           repo-path: course-js-api-framework
-          environment-name: dev
+          environment: dev
 
   deploy-to-stg:
     runs-on: self-hosted
@@ -46,7 +46,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
-          environment-name: stg
+          environment: stg
           port: "7002"
   
   tests-on-stg:
@@ -57,7 +57,7 @@ jobs:
       - uses: ./.github/actions/test
         with:
           repo-path: course-js-api-framework
-          environment-name: stg
+          environment: stg
   
   deploy-to-preprod:
     runs-on: self-hosted
@@ -67,7 +67,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
-          environment-name: preprod
+          environment: preprod
           port: "7003"
   
   tests-on-preprod:
@@ -78,7 +78,7 @@ jobs:
       - uses: ./.github/actions/test
         with:
           repo-path: course-js-api-framework
-          environment-name: preprod
+          environment: preprod
     
   deploy-to-prod:
     runs-on: self-hosted
@@ -88,7 +88,7 @@ jobs:
       - uses: ./.github/actions/deploy
         with:
           repo-path: python-greetings
-          environment-name: prod
+          environment: prod
           port: "7004"
   
   tests-on-prod:
@@ -99,4 +99,4 @@ jobs:
       - uses: ./.github/actions/test
         with:
           repo-path: course-js-api-framework
-          environment-name: prod
+          environment: prod

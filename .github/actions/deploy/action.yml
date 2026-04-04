@@ -5,9 +5,9 @@ inputs:
   repo-path:
     required: true
     description: Directory for python greetings
-  environment-name:
+  ${{ inputs.repo-path }}/requirements.txt:
     required: true
-    description: Environment name
+    description: Environment
   port:
     required: true
     description: Port number
@@ -33,7 +33,7 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
-        node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment-name }} || exit 0
+        node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start new connection
       shell: cmd
@@ -41,4 +41,4 @@ runs:
       run: |
         echo Starting new connection..
         dir
-        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment-name }} app.py --interpreter "..\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter "..\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}

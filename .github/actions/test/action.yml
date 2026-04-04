@@ -5,9 +5,9 @@ inputs:
   repo-path:
     required: true
     description: Directory for python greetings
-  environment-name:
+  environment:
     required: true
-    description: Environment name
+    description: Environment
 
 runs:
   using: composite
@@ -30,4 +30,4 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Running npm greetings script..
-        npm run greetings greetings_${{ inputs.environment-name }}
+        npm run greetings greetings_${{ inputs.environment }}
