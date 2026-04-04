@@ -36,4 +36,4 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Installing Python packages from requirements.txt..."
-        venv/bin/python -m pip install -r requirements.txt
+        venv/Scripts/python -m pip install -r requirements.txt

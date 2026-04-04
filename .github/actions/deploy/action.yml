@@ -31,7 +31,7 @@ runs:
       run: |
         echo "Preparing Python environment for deployment..."
         py -m venv venv
-        venv/bin/python -m pip install -r requirements.txt
+        venv/Scripts/python -m pip install -r requirements.txt
 
     - name: Verify PM2 installation
       shell: cmd
@@ -51,5 +51,5 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Starting greetings-app-${{ inputs.environment }} on port ${{ inputs.port }}..."
-        pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter venv/bin/python -- --port ${{ inputs.port }}
+        pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter venv/Scripts/python -- --port ${{ inputs.port }}
         pm2 list
