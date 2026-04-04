@@ -1,102 +1,136 @@
-name: python-greetings
+name: python greetings
 
 on:
-  push:
-    branches: ["main"]
-    paths-ignore: 
-      - 'README.md'
-      - 'Jenkinsfile'
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   install-pip-deps:
+    name: install-pip-deps
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/build
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Install Python dependencies
+        uses: ./.github/actions/build
         with:
           repo-path: python-greetings
 
   deploy-to-dev:
+    name: deploy-to-dev
     runs-on: self-hosted
     needs: install-pip-deps
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/deploy
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Deploy to dev
+        uses: ./.github/actions/deploy
         with:
-          repo-path: python-greetings
           environment: dev
-          port: "7001"
+          port: '7001'
+          repo-path: python-greetings
 
   tests-on-dev:
+    name: tests-on-dev
     runs-on: self-hosted
     needs: deploy-to-dev
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/test
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Run tests on dev
+        uses: ./.github/actions/test
         with:
-          repo-path: course-js-api-framework
           environment: dev
+          repo-path: course-js-api-framework
 
   deploy-to-stg:
+    name: deploy-to-stg
     runs-on: self-hosted
     needs: tests-on-dev
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/deploy
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Deploy to stg
+        uses: ./.github/actions/deploy
         with:
-          repo-path: python-greetings
           environment: stg
-          port: "7002"
-  
+          port: '7002'
+          repo-path: python-greetings
+
   tests-on-stg:
+    name: tests-on-stg
     runs-on: self-hosted
     needs: deploy-to-stg
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/test
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Run tests on stg
+        uses: ./.github/actions/test
         with:
-          repo-path: course-js-api-framework
           environment: stg
-  
+          repo-path: course-js-api-framework
+
   deploy-to-preprod:
+    name: deploy-to-preprod
     runs-on: self-hosted
     needs: tests-on-stg
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/deploy
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Deploy to preprod
+        uses: ./.github/actions/deploy
         with:
-          repo-path: python-greetings
           environment: preprod
-          port: "7003"
-  
+          port: '7003'
+          repo-path: python-greetings
+
   tests-on-preprod:
+    name: tests-on-preprod
     runs-on: self-hosted
     needs: deploy-to-preprod
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/test
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Run tests on preprod
+        uses: ./.github/actions/test
         with:
-          repo-path: course-js-api-framework
           environment: preprod
-    
+          repo-path: course-js-api-framework
+
   deploy-to-prod:
+    name: deploy-to-prod
     runs-on: self-hosted
     needs: tests-on-preprod
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/deploy
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Deploy to prod
+        uses: ./.github/actions/deploy
         with:
-          repo-path: python-greetings
           environment: prod
-          port: "7004"
-  
+          port: '7004'
+          repo-path: python-greetings
+
   tests-on-prod:
+    name: tests-on-prod
     runs-on: self-hosted
     needs: deploy-to-prod
     steps:
-      - uses: actions/checkout@v6
-      - uses: .//.github/actions/test
+      - name: Checkout pipeline repository
+        uses: actions/checkout@v6
+
+      - name: Run tests on prod
+        uses: ./.github/actions/test
         with:
-          repo-path: course-js-api-framework
           environment: prod
+          repo-path: course-js-api-framework

@@ -1,33 +1,37 @@
-name: test
-description: Run tests
+name: Run tests
+description: run tests.
 
 inputs:
-  repo-path:
-    required: true
-    description: Directory for python greetings
   environment:
+    description: Environment name to test.
     required: true
-    description: Environment
+  repo-path:
+    description: Local folder where course-js-api-framework will be checked out.
+    required: true
 
 runs:
   using: composite
   steps:
-    - name: course js api framework repository
+    - name: Print stage info
+      shell: bat
+      run: echo "Running tests on ${{ inputs.environment }} environment..."
+
+    - name: Checkout course-js-api-framework repository
       uses: actions/checkout@v6
       with:
         repository: mtararujs/course-js-api-framework
         path: ${{ inputs.repo-path }}
 
-    - name: Install all npm dependencies
-      shell: cmd
+    - name: Install npm dependencies
+      shell: bat
       working-directory: ${{ inputs.repo-path }}
       run: |
-        echo Installing all npm dependencies..
+        echo "Installing npm dependencies..."
         npm install
 
-    - name: Run npm greetings script
-      shell: cmd
+    - name: Execute greetings tests
+      shell: bat
       working-directory: ${{ inputs.repo-path }}
       run: |
-        echo Running npm greetings script..
+        echo "Executing greetings_${{ inputs.environment }} test suite..."
         npm run greetings greetings_${{ inputs.environment }}

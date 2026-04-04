@@ -1,32 +1,55 @@
-name: deploy
-description: Deploy python greetings
+name: Deploy
+description: deploy with PM2.
 
 inputs:
-  repo-path:
-    required: true
-    description: Directory for python greetings
   environment:
+    description: Deployment environment name.
     required: true
-    description: Environment
   port:
+    description: Port to start the service on.
     required: true
-    description: Port number
+  repo-path:
+    description: Local folder where python-greetings will be checked out.
+    required: true
 
 runs:
   using: composite
   steps:
-    - name: Delete old connection
+    - name: Print stage info
+      shell: bat
+      run: echo "Deploying application to ${{ inputs.environment }}..."
+
+    - name: Checkout python-greetings repository
       uses: actions/checkout@v6
-      shell: cmd
+      with:
+        repository: mtararujs/python-greetings
+        path: ${{ inputs.repo-path }}
+
+    - name: Create virtual environment
+      shell: bat
+      working-directory: ${{ inputs.repo-path }}
       run: |
-        echo Deleting old connection..
-        dir ..
+        echo "Preparing Python environment for deployment..."
+        py -m venv venv
+        ./venv/bin/python -m pip install -r requirements.txt
+
+    - name: Verify PM2 installation
+      shell: bat
+      run: |
+        echo "Checking PM2 availability..."
+        pm2 --version
+
+    - name: Stop old service if it exists
+      shell: bat
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo "Stopping old greetings-app-${{ inputs.environment }} service if it exists..."
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
-    - name: Start new connection
-      uses: actions/checkout@v6
-      shell: cmd
+    - name: Start service with PM2
+      shell: bat
+      working-directory: ${{ inputs.repo-path }}
       run: |
-        echo Starting new connection..
-        dir
-        pm2 start -n greetings-app-${{ inputs.environment }} ${{ inputs.repo-path }}\app.py --interpreter ${{ inputs.repo-path }}\venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
+        echo "Starting greetings-app-${{ inputs.environment }} on port ${{ inputs.port }}..."
+        pm2 start app.py --name greetings-app-${{ inputs.environment }} --interpreter ./venv/bin/python -- --port ${{ inputs.port }}
+        pm2 list

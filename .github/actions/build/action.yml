@@ -1,35 +1,39 @@
-name: build
-description: Install python dependencies
+name: Install pip dependencies
+description: Clone python greetings
 
 inputs:
   repo-path:
+    description: Local folder where python-greetings will be checked out.
     required: true
-    description: Directory for python greetings
 
 runs:
   using: composite
   steps:
+    - name: Print stage info
+      shell: bat
+      run: echo "Installing all required dependencies..."
+
     - name: Checkout python-greetings repository
       uses: actions/checkout@v6
       with:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
-        clean: "false"
 
-    - name: Create environment
-      shell: cmd
+    - name: Show cloned files
+      shell: bat
       working-directory: ${{ inputs.repo-path }}
-      run: |
-        echo Creating environment..
-        py -m venv venv
-
-    - name: Show repository files
-      shell: cmd
       run: dir
 
-    - name: Install dependencies
-      shell: cmd
+    - name: Create virtual environment
+      shell: bat
       working-directory: ${{ inputs.repo-path }}
       run: |
-        echo Installing dependencies..
-        venv\\Scripts\\python.exe -m pip install -r requirements.txt
+        echo "Creating Python virtual environment..."
+        py -m venv venv
+
+    - name: Install Python packages
+      shell: bat
+      working-directory: ${{ inputs.repo-path }}
+      run: |
+        echo "Installing Python packages from requirements.txt..."
+        ./venv/bin/python -m pip install -r requirements.txt
