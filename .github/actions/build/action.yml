@@ -13,8 +13,8 @@ runs:
       uses: actions/checkout@v6
       with:
         repository: mtararujs/python-greetings
-        clean: "false"
         path: ${{ inputs.repo-path }}
+        clean: "false"
 
     - name: Create environment
       shell: cmd
