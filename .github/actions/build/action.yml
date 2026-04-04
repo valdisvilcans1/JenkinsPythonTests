@@ -10,7 +10,7 @@ runs:
   using: composite
   steps:
     - name: Print stage info
-      shell: bat
+      shell: cmd
       run: echo "Installing all required dependencies..."
 
     - name: Checkout python-greetings repository
@@ -20,19 +20,19 @@ runs:
         path: ${{ inputs.repo-path }}
 
     - name: Show cloned files
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: dir
 
     - name: Create virtual environment
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Creating Python virtual environment..."
         py -m venv venv
 
     - name: Install Python packages
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Installing Python packages from requirements.txt..."

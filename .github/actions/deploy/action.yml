@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Print stage info
-      shell: bat
+      shell: cmd
       run: echo "Deploying application to ${{ inputs.environment }}..."
 
     - name: Checkout python-greetings repository
@@ -26,7 +26,7 @@ runs:
         path: ${{ inputs.repo-path }}
 
     - name: Create virtual environment
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Preparing Python environment for deployment..."
@@ -34,20 +34,20 @@ runs:
         ./venv/bin/python -m pip install -r requirements.txt
 
     - name: Verify PM2 installation
-      shell: bat
+      shell: cmd
       run: |
         echo "Checking PM2 availability..."
         pm2 --version
 
     - name: Stop old service if it exists
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Stopping old greetings-app-${{ inputs.environment }} service if it exists..."
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start service with PM2
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Starting greetings-app-${{ inputs.environment }} on port ${{ inputs.port }}..."

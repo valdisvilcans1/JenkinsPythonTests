@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Print stage info
-      shell: bat
+      shell: cmd
       run: echo "Running tests on ${{ inputs.environment }} environment..."
 
     - name: Checkout course-js-api-framework repository
@@ -23,14 +23,14 @@ runs:
         path: ${{ inputs.repo-path }}
 
     - name: Install npm dependencies
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Installing npm dependencies..."
         npm install
 
     - name: Execute greetings tests
-      shell: bat
+      shell: cmd
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Executing greetings_${{ inputs.environment }} test suite..."
