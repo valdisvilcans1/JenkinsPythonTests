@@ -40,4 +40,4 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Starting new connection..
-        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment-name }} app.py --interpreter "%CD%\\venv\\Scripts\\pythonw.exe" -- --port ${{ inputs.port }}
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment-name }} app.py --interpreter %CD%\venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
