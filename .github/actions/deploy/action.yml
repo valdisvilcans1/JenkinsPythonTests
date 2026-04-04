@@ -17,15 +17,15 @@ runs:
   steps:
     - name: Delete old connection
       shell: cmd
-      working-directory: ..\${{ inputs.repo-path }}
+      # working-directory: ..\${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
+        dir
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start new connection
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Starting new connection..
         dir
-        pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
+        pm2 start -n greetings-app-${{ inputs.environment }} ${{ inputs.repo-path }}\app.py --interpreter ${{ inputs.repo-path }}\venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
