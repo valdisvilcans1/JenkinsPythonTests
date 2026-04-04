@@ -16,6 +16,7 @@ runs:
   using: composite
   steps:
     - name: Delete old connection
+      uses: actions/checkout@v6
       shell: cmd
       run: |
         echo Deleting old connection..
@@ -23,6 +24,7 @@ runs:
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start new connection
+      uses: actions/checkout@v6
       shell: cmd
       run: |
         echo Starting new connection..

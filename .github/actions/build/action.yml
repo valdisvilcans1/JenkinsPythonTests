@@ -10,7 +10,6 @@ runs:
   using: composite
   steps:
     - name: Checkout python-greetings repository
-      uses: actions/checkout@v6
       with:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
