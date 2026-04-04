@@ -34,4 +34,4 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo "Executing greetings_${{ inputs.environment }} test suite..."
-        npm run greetings greetings_${{ inputs.environment }}
+        npm run greetings -- --grep "greetings_${{ inputs.environment }}"
