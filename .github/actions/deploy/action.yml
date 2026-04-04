@@ -41,4 +41,4 @@ runs:
       run: |
         echo Starting new connection..
         dir
-        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter ..\venv\Scripts\pythonw.exe -- --port ${{ inputs.port }}
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter "%CD%\..\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
