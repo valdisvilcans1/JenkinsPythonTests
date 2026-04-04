@@ -20,7 +20,7 @@ runs:
       # working-directory: ..\${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
-        dir
+        dir ..
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start new connection
