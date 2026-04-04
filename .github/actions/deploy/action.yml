@@ -17,7 +17,7 @@ runs:
   steps:
     - name: Delete old connection
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
+      working-directory: ..\${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
         pm2 delete greetings-app-${{ inputs.environment }} || exit 0
