@@ -14,7 +14,7 @@ runs:
       with:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
-        clean: false
+        clean: 'false'
 
     - name: Create environment
       shell: cmd
