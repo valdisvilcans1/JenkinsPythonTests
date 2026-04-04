@@ -5,7 +5,7 @@ inputs:
   repo-path:
     required: true
     description: Directory for python greetings
-  ${{ inputs.repo-path }}/requirements.txt:
+  environment:
     required: true
     description: Environment
   port:
