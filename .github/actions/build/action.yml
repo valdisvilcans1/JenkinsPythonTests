@@ -17,6 +17,7 @@ runs:
 
     - name: Create environment
       shell: cmd
+      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Creating environment..
         py -m venv venv
@@ -27,6 +28,7 @@ runs:
 
     - name: Install dependencies
       shell: cmd
+      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Installing dependencies..
-        venv\\Scripts\\python.exe -m pip install -r "${{ inputs.repo-path }}/requirements.txt"
+        venv\\Scripts\\python.exe -m pip install -r requirements.txt
