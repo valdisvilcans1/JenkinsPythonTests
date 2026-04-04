@@ -23,22 +23,19 @@ runs:
 
     - name: Install pm2 dependency
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Installing pm2 dependency..
         npm install pm2
 
     - name: Delete old connection
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Deleting old connection..
         node_modules\.bin\pm2 delete greetings-app-${{ inputs.environment }} || exit 0
 
     - name: Start new connection
       shell: cmd
-      working-directory: ${{ inputs.repo-path }}
       run: |
         echo Starting new connection..
         dir
-        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} app.py --interpreter "%CD%\..\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
+        node_modules\.bin\pm2 start -n greetings-app-${{ inputs.environment }} ${{ inputs.repo-path }}/app.py --interpreter "%CD%\venv\Scripts\pythonw.exe" -- --port ${{ inputs.port }}
