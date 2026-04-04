@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/build
+      - uses: .//.github/actions/build
         with:
           repo-path: python-greetings
 
@@ -22,8 +22,7 @@ jobs:
     needs: install-pip-deps
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/build
-      - uses: ./.github/actions/deploy
+      - uses: .//.github/actions/deploy
         with:
           repo-path: python-greetings
           environment: dev
@@ -34,7 +33,7 @@ jobs:
     needs: deploy-to-dev
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/test
+      - uses: .//.github/actions/test
         with:
           repo-path: course-js-api-framework
           environment: dev
@@ -44,8 +43,7 @@ jobs:
     needs: tests-on-dev
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/build
-      - uses: ./.github/actions/deploy
+      - uses: .//.github/actions/deploy
         with:
           repo-path: python-greetings
           environment: stg
@@ -56,7 +54,7 @@ jobs:
     needs: deploy-to-stg
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/test
+      - uses: .//.github/actions/test
         with:
           repo-path: course-js-api-framework
           environment: stg
@@ -66,8 +64,7 @@ jobs:
     needs: tests-on-stg
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/build
-      - uses: ./.github/actions/deploy
+      - uses: .//.github/actions/deploy
         with:
           repo-path: python-greetings
           environment: preprod
@@ -78,7 +75,7 @@ jobs:
     needs: deploy-to-preprod
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/test
+      - uses: .//.github/actions/test
         with:
           repo-path: course-js-api-framework
           environment: preprod
@@ -88,8 +85,7 @@ jobs:
     needs: tests-on-preprod
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/build
-      - uses: ./.github/actions/deploy
+      - uses: .//.github/actions/deploy
         with:
           repo-path: python-greetings
           environment: prod
@@ -100,7 +96,7 @@ jobs:
     needs: deploy-to-prod
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/test
+      - uses: .//.github/actions/test
         with:
           repo-path: course-js-api-framework
           environment: prod
