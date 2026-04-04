@@ -25,7 +25,7 @@ runs:
       working-directory: ${{ inputs.repo-path }}
       run: |
         echo Creating environment..
-        venv\\Scripts\\python.exe -m venv venv
+        py -m venv venv
 
     - name: Install dependencies
       shell: cmd
